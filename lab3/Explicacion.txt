@@ -1,0 +1,41 @@
+
+Regresión Logística Binaria – Diabetes Hospital Readmission Dataset
+
+Descripción del proyecto
+
+Este proyecto implementa un modelo de **regresión logística binaria** desarrollado desde cero para predecir la probabilidad de reingreso hospitalario en pacientes diabéticos. El objetivo es clasificar si un paciente será readmitido en un periodo menor a 30 días basándose en su historial clínico, aplicando técnicas de preprocesamiento, normalización y optimización mediante descenso de gradiente.
+
+Dataset utilizado
+
+Se utilizó el Diabetes 130-US hospitals dataset, el cual es un conjunto de datos médicos que contiene información detallada de encuentros hospitalarios.
+
+* Registros: Aproximadamente 101,766 filas.
+* Variables: Originalmente 50 características (demográficas, diagnósticos, medicamentos y laboratorio).
+* Cumplimiento: El dataset supera con creces los requisitos de más de 30,000 ejemplos y 40 propiedades para un problema de clasificación binaria.
+
+Tecnologías utilizadas
+
+* Python: Lenguaje base.
+* Pandas & NumPy: Manipulación de estructuras de datos y operaciones matriciales.
+* Matplotlib: Visualización de la curva de aprendizaje (costo).
+* Scikit-Learn: Utilizado exclusivamente para la normalización (`StandardScaler`) y la división de datos (`train_test_split`).
+
+Proceso realizado
+
+1. Carga del dataset: Importación de los datos clínicos desde un archivo CSV.
+2. Limpieza y Selección de Características: Se seleccionaron manualmente las columnas numéricas clave (tiempo en hospital, procedimientos de laboratorio, número de medicamentos, etc.) para evitar el ruido de datos no numéricos.
+3. Preprocesamiento: Conversión de la variable objetivo `readmitted` a un formato binario (1 si el reingreso es <30 días, 0 en caso contrario).
+4. Normalización de datos: Aplicación de escalamiento estándar para asegurar que variables con rangos distintos (ej. edad vs. número de laboratorios) tengan el mismo peso.
+5. División del dataset:
+* 80% para entrenamiento (`X_train`).
+* 20% para prueba (`X_test`).
+
+
+6. Implementación del modelo: Creación manual de la función sigmoide y la función de costo.
+7. Entrenamiento: Ajuste de los pesos θ mediante el algoritmo de Descenso de Gradiente a lo largo de 1000 iteraciones con un factor de aprendizaje α de 0.01.
+8. Evaluación: Predicción sobre el conjunto de prueba y cálculo de la precisión final.
+
+Resultados
+
+* Curva de Aprendizaje: La gráfica de la función de costo mostró una disminución constante, validando que el algoritmo de descenso de gradiente convergió hacia un mínimo global.
+* Efectividad: El modelo alcanzó una precisión sólida, demostrando ser capaz de identificar patrones en pacientes diabéticos para predecir riesgos de salud futuros.
