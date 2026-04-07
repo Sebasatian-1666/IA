@@ -1,0 +1,10 @@
+Explicación: 
+celda 1: cargamos las librerías 
+celda 2: cargamos el Dataset preparado
+celda 3: motramos la información del dataset
+celda 4: preparamos los vectores para realizar el modelo
+celda 5: función para normalizar los valores
+celda 6: Dividimos los datos del Dataset para entrenar y probar el modelo, 75% para entrenar y 25% para probar
+celda 7: creamos una clase individual para dividir bien los datos
+celda 8: el modelo y calcula el costo y la presición 
+celda 9: gráfica de presición 
