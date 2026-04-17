@@ -1,0 +1,26 @@
+Laboratorio 6 -G1
+Integrantes: 
+Aillón Piccolomini Sebastian
+Gutierrez Montiel Daniel 
+ 
+En el presente laboratorio se trabajó con un modelo de clasificación multiclase aplicado al dataset Adult, cuyo objetivo principal es predecir la ocupación (occupation) de una persona a partir de distintas variables. Para ello, se siguió un proceso completo que incluye la carga de datos, el preprocesamiento, la construcción del modelo, su entrenamiento y la evaluación mediante diferentes métricas.
+
+En primer lugar, se importaron las librerías necesarias para el desarrollo del laboratorio. Se utilizaron herramientas como NumPy y Pandas para el manejo de datos, Matplotlib y Seaborn para la visualización de resultados, PyTorch para la construcción y entrenamiento del modelo de aprendizaje automático, y Scikit-learn para la división de datos y el cálculo de métricas de evaluación. Estas librerías permiten trabajar de manera eficiente tanto con datos como con modelos de machine learning.
+
+Posteriormente, se realizó la carga del dataset y su preparación. En esta etapa se separaron las variables de entrada (X) de la variable objetivo (y), que en este caso corresponde a la ocupación. Además, se eliminaron columnas innecesarias como “fnlwgt” y se transformaron las variables categóricas en variables numéricas mediante la técnica de one-hot encoding, utilizando la función get_dummies. Este paso es fundamental, ya que los modelos de aprendizaje automático requieren datos numéricos para poder operar correctamente.
+
+Luego, los datos fueron convertidos a tensores, que es el formato que utiliza PyTorch para trabajar. También se definió el dispositivo de ejecución, el cual puede ser CPU o GPU dependiendo de la disponibilidad del sistema, lo que permite mejorar el rendimiento en caso de contar con una tarjeta gráfica.
+
+En cuanto al modelo, se implementó una regresión logística multinomial, que consiste en una única capa lineal. Esto significa que el modelo recibe como entrada las características del dataset y genera como salida una probabilidad para cada clase posible. No se utilizan capas ocultas, por lo que se trata de un modelo sencillo pero efectivo para este tipo de problemas. La función de pérdida utilizada fue CrossEntropyLoss, la cual es adecuada para problemas de clasificación multiclase, ya que combina la función Softmax con la pérdida logarítmica.
+
+Durante el entrenamiento, el modelo ajusta sus parámetros con el objetivo de minimizar la función de pérdida. Una vez entrenado, se procede a evaluar su rendimiento utilizando diversas métricas. Entre ellas se encuentra la accuracy, que mide el porcentaje total de aciertos del modelo. También se utilizaron precision, recall y F1-score, que permiten analizar el desempeño del modelo de manera más detallada, especialmente en datasets donde las clases pueden estar desbalanceadas. La precisión indica qué tan correctas son las predicciones positivas, el recall mide la capacidad del modelo para detectar todos los casos reales, y el F1-score representa un equilibrio entre ambas métricas.
+
+Además, se generó una matriz de confusión, la cual permite visualizar de manera clara los aciertos y errores del modelo. En esta matriz, los valores de la diagonal representan las predicciones correctas, mientras que los valores fuera de la diagonal indican las confusiones entre clases. Esta herramienta es muy útil para identificar en qué clases el modelo presenta mayores dificultades.
+
+También se utilizó el classification report, que proporciona un resumen completo de las métricas (precision, recall, F1-score y soporte) para cada clase individual, lo que permite un análisis más detallado del comportamiento del modelo.
+
+Por otro lado, se analizó el comportamiento del modelo variando el umbral de decisión (threshold), lo que permitió observar la relación entre precision y recall. Este análisis es importante porque muestra el trade-off existente entre ambas métricas, es decir, cómo mejorar una puede afectar negativamente a la otra.
+
+Finalmente, se evaluó el modelo utilizando la curva ROC y el valor AUC. La curva ROC representa la relación entre la tasa de verdaderos positivos y la tasa de falsos positivos, mientras que el AUC mide el área bajo esta curva. Un valor de AUC cercano a 1 indica un buen desempeño del modelo. En este caso, al tratarse de un problema multiclase, se utilizó el enfoque One-vs-Rest, donde cada clase se evalúa contra el resto.
+
+En conclusión, el laboratorio permitió implementar y evaluar un modelo de clasificación multiclase utilizando PyTorch, comprendiendo no solo su funcionamiento, sino también la importancia de las métricas y herramientas de evaluación para analizar su desempeño.
