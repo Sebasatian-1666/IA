@@ -1,0 +1,62 @@
+Punto 1 — Dataset Sintético y KMeans
+Celda 1 — Generación del dataset sintético:
+Se importan las librerías necesarias y se genera un dataset aleatorio. Se sortea aleatoriamente entre 1 y 20 centroides, y se colocan en un espacio de -30 a 30 asegurando una distancia mínima de 6 unidades entre cada centroide para que los clusters queden visualmente separados. Se usa blob_std=0.8 para que los puntos de cada cluster sean compactos y no se dispersen. Finalmente se generan 2000 puntos distribuidos entre todos los centroides.
+Celda 2 — Visualización del dataset:
+Se grafica el dataset generado con plt.scatter. Como aún no se aplicó KMeans, todos los puntos aparecen del mismo color. Sirve para verificar visualmente que los clusters están bien separados antes de entrenar.
+Celda 3 — Definición de funciones de visualización:
+Se define plot_clusters que grafica los puntos coloreándolos según su etiqueta si se proporciona.
+Celda 4 — Visualización sin etiquetas:
+Se muestra el dataset sin colorear por clusters, simulando la situación real donde no tenemos etiquetas.
+Celda 5 — Entrenamiento de KMeans:
+Se entrena KMeans con k igual al número real de centroides generados. fit_predict entrena el modelo y asigna cada punto a un cluster en un solo paso.
+Celda 6 — Centroides encontrados:
+Se imprimen las coordenadas de los centroides que encontró KMeans, que deberían ser cercanas a los centroides reales generados.
+Celda 7 — Predicción en nuevos puntos:
+Se prueba el modelo prediciendo a qué cluster pertenecen 4 puntos nuevos, demostrando que KMeans puede clasificar datos que no vio durante el entrenamiento.
+Celda 8 — Funciones de visualización avanzada:
+Se definen tres funciones: plot_data grafica los puntos, plot_centroids marca los centroides con círculos y cruces, y plot_decision_boundaries dibuja las fronteras de decisión entre clusters usando una malla de puntos.
+Celda 9 — Fronteras de decisión:
+Se visualizan las fronteras de decisión del modelo. Cada región coloreada representa la zona de influencia de un centroide. Esta gráfica muestra claramente cómo KMeans divide el espacio en regiones de Voronoi.
+Celda 10 — Soft clustering:
+Se muestra la distancia de los nuevos puntos a cada centroide. A diferencia del hard clustering que asigna un solo cluster, el soft clustering muestra qué tan cerca está cada punto de todos los centroides, dando una medida de pertenencia.
+Celda 11 — Iteraciones del algoritmo:
+Se entrena KMeans con diferentes semillas y número máximo de iteraciones para visualizar cómo evoluciona el algoritmo. Se muestran 3 pares de gráficas: cada par muestra la actualización de centroides y el etiquetado resultante en cada iteración, ilustrando cómo el algoritmo converge progresivamente.
+Celda 12 — Efecto de la inicialización aleatoria:
+Se comparan dos ejecuciones de KMeans con inicialización aleatoria diferente. Demuestra que una mala inicialización puede llevar a soluciones subóptimas, donde los clusters no corresponden a los grupos reales.
+Celda 13 — Múltiples inicializaciones:
+Se entrena KMeans con n_init=10, lo que significa que corre 10 veces con diferentes inicializaciones y se queda con la mejor. Esto reduce el riesgo de quedar atrapado en una solución subóptima.
+Celda 14 — Visualización con múltiples inits:
+Se grafican las fronteras de decisión del modelo con 10 inicializaciones, mostrando que el resultado es más estable y correcto que con una sola inicialización aleatoria.
+Celda 15 — MiniBatchKMeans:
+Se implementa MiniBatchKMeans, una variante que en lugar de usar todos los datos en cada iteración usa pequeños lotes aleatorios. Es más rápido pero puede sacrificar algo de precisión. Se prueba con 10 inicializaciones, 100 iteraciones y lotes de 100 muestras.
+Celda 16 — Score de MiniBatchKMeans:
+Se evalúa la inercia del mejor modelo encontrado, que representa la suma de distancias al cuadrado de cada punto a su centroide más cercano.
+Celda 17 — Silhouette score individual:
+Se calcula el silhouette score del modelo KMeans entrenado. Este valor entre -1 y 1 indica qué tan bien están agrupados los datos: cercano a 1 significa clusters bien definidos y separados, cercano a 0 significa clusters solapados.
+Celda 18 — Silhouette score para distintos k:
+Se calcula el silhouette score para valores de k desde 2 hasta el número real de centroides más algunos valores extra. La gráfica muestra un pico en el k óptimo, que debería coincidir con el número real de centroides generados, demostrando la efectividad de esta métrica para encontrar el k correcto.
+Celda 19 — Método del codo:
+Se calcula la inercia para cada valor de k y se grafica. La curva tiene forma de codo: baja rápido al principio y luego se aplana. El punto donde empieza a aplanarse indica el k óptimo. Junto con el silhouette score, permite confirmar cuántos clusters reales tiene el dataset.
+Celda 20 — Diagrama de silueta para k=3,4,5,6:
+Se visualizan los diagramas de silueta para 4 valores de k fijos. Cada barra representa un cluster y su ancho muestra el silhouette coefficient de cada punto. La línea roja indica el score promedio. Un buen k tiene barras uniformes y anchas que superan la línea roja.
+Celda 21 — Diagrama de silueta dinámico:
+Se generan diagramas de silueta para todos los valores de k probados, adaptándose automáticamente al número de centroides generados. Permite comparar visualmente todos los k y elegir el más adecuado.
+##############################################################################################################################################################################
+Punto 2 — Dataset Amazon Products
+Celda 1 — Montar Drive y cargar dataset:
+Se monta Google Drive para acceder a los archivos almacenados. Se importan las librerías principales: numpy para manejo de arrays numéricos, pandas para manejo del dataframe y train_test_split para dividir los datos. Se carga el CSV del dataset de Amazon con pd.read_csv, que contiene 10002 productos con 28 columnas cada uno.
+Celda 2 — Exploración de nulos y tipos:
+Se revisan cuántos valores nulos tiene cada columna con isnull().sum() y de qué tipo es cada una con dtypes. Este diagnóstico es fundamental porque el dataset tiene columnas completamente vacías (10002 nulos de 10002 filas) y columnas con tipos incorrectos como Selling Price que viene como texto con el símbolo $ en lugar de número.
+Celda 3 — Eliminación de columnas:
+Se eliminan 19 columnas que tienen todos o casi todos los valores nulos, ya que no aportan información útil al modelo. También se eliminan identificadores únicos como Uniq Id y Product Url que no tienen valor para el clustering. Quedan 10 columnas: Product Name, Category, Selling Price, Model Number, About Product, Product Specification, Technical Details, Shipping Weight, Image e Is Amazon Seller.
+Celda 4 — Descarga de imágenes:
+Esta es la celda más importante del punto 2. Se usan tres librerías para descargar las imágenes:
+
+requests — se encarga de hacer la petición HTTP a cada URL de imagen, como si fuera un navegador descargando una página. Se usa timeout=5 para que si una URL tarda más de 5 segundos en responder simplemente se descarte y se pase a la siguiente.
+PIL (Pillow) — recibe la respuesta de requests y la convierte en un objeto imagen real. Se usa convert('RGB') para asegurarse de que todas las imágenes tengan 3 canales de color (rojo, verde, azul), ya que algunas podrían venir en escala de grises o con canal alpha de transparencia, lo cual causaría inconsistencias en el array final.
+BytesIO — actúa como intermediario entre requests y PIL. Como requests devuelve los bytes crudos de la imagen y PIL necesita un objeto de tipo archivo para abrirla, BytesIO convierte esos bytes en algo que PIL puede leer sin necesidad de guardar nada en disco.
+
+Cada imagen se redimensiona a 28x28 píxeles con resize((28, 28)) para estandarizar el tamaño, y se convierte a array numérico con np.array. Se guarda el índice de cada fila exitosa en indices_ok para mantener la alineación con el dataframe. De las 10002 URLs se descargaron exitosamente 9965, fallando solo 37 por URLs caídas o timeout.
+Preparación de datos: Se alinea el dataframe con las imágenes usando indices_ok, se aplanan las imágenes a vectores de 2352 valores, se codifican las 24 categorías con LabelEncoder y se divide en train/validación/test.
+Semisupervisado: Se entrena KMeans con 50 clusters y se identifican las 50 imágenes más representativas, una por cluster. Se entrena una Regresión Logística solo con esas 50 imágenes etiquetadas y se compara contra 50 imágenes aleatorias, demostrando que los representantes dan mejor resultado. Luego se propagan las etiquetas de los representantes a todo su cluster, etiquetando automáticamente los 6377 ejemplos de entrenamiento con solo 50 etiquetas manuales.
+Aprendizaje activo: Se identifican los 50 ejemplos donde el modelo tiene menor confianza en su predicción usando predict_proba y argsort. Esos ejemplos se etiquetan con sus valores reales y se reentrenan, demostrando que corregir los casos más inciertos mejora el modelo más eficientemente que agregar ejemplos al azar.
